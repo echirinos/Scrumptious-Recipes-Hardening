@@ -3,15 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-
 from recipes.forms import RatingForm
-
-try:
-    from recipes.forms import RecipeForm
-    from recipes.models import Recipe
-except Exception:
-    RecipeForm = None
-    Recipe = None
+from recipes.forms import RecipeForm
+from recipes.models import Recipe
 
 
 def log_rating(request, recipe_id):

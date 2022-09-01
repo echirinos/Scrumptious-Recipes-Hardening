@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from recipes.models import Recipe, Measure, FoodItem, Ingredient, Step, Rating
 
+from meal_plans.models import MealPlan
 
 # Register your models here.
 class RecipeAdmin(admin.ModelAdmin):

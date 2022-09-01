@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <main>
+    <div class="delete-form">
+      <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{mealplan.name}}"?</p>
+        {{ form.as_p }}
+        <div>
+          <button class="button">Delete</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  {% endblock content %}

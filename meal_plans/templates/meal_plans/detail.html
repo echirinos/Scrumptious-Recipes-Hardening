@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load markdownify %}
+
+{% block content %}
+
+<main class="recipe-grid">
+  <div>
+    <a href="{% url 'meal_plans_edit' mealplan.id %}">Edit</a>
+    <a href="{% url 'meal_plans_delete' mealplan.id %}">Delete</a>
+  </div>
+      <h1>{{mealplan.name}}</h1>
+      {%for recipe in mealplan.recipes.all%}
+      <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
+      {% endfor %}
+</main>
+  {% comment %} <main class="recipe-detail">
+    <div>
+      <a href="{% url 'meal_plans_edit' mealplan.id %}">Edit</a>
+      <a href="{% url 'meal_plans_delete' mealplan.id %}">Delete</a>
+    </div>
+    {% if recipe.image %}
+      <img src="{{ recipe.image }}" class="pull-right">
+    {% endif %}
+    <h1>{{ recipe.name }}</h1>
+    <h2>by: {{ recipe.author | default_if_none:"Unknown" }}</h2>
+    <p>
+      Created on {{ recipe.created }} |
+      Updated on {{ recipe.updated }}
+    </p>
+    <form method="post" action="{% url 'recipe_rating' mealplan.id %}">
+      {% csrf_token %}
+      <div class="rating-form-grid">
+        {{ rating_form.as_p }}
+        <button class="button">Rate</button>
+      </div>
+    </form>
+    <p>Tags: {% for tag in recipe.tags.all %}{{ tag.word }} {% endfor %}</p>
+    {{ recipe.description | markdownify }}
+    <h2>Ingredients</h2>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">Amount</th>
+          <th>Food item</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ingredient in recipe.ingredients.all %}
+          <tr>
+            <td>{{ ingredient.amount }}</td>
+            <td>{{ ingredient.measure.name }}</td>
+            <td>{{ ingredient.food.name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h2>Steps</h2>
+    <ol>
+      {% for step in recipe.steps.all %}
+        <li>{{ step.directions }}</li>
+      {% endfor %}
+    </ol>
+  </main> {% endcomment %}
+  {% endblock content %}

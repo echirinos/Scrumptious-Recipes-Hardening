@@ -47,8 +47,10 @@
         {% csrf_token %}
         <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}">
         <button>+ shopping list</button>
+        {% else %}
+        <p>In your list</p>
       </form>
-      alert("in your list")
+
     </td>
     {% endif %}
   </tr>

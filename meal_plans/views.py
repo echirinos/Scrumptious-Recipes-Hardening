@@ -6,7 +6,6 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from meal_plans.models import MealPlan
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 
 
 class MealPlansListView(LoginRequiredMixin, ListView):
@@ -19,7 +18,7 @@ class MealPlansListView(LoginRequiredMixin, ListView):
         return MealPlan.objects.filter(owner=self.request.user)
 
 
-class MealPlansDetailView(DetailView):
+class MealPlansDetailView(LoginRequiredMixin, DetailView):
     model = MealPlan
     template_name = "meal_plans/detail.html"
 
@@ -39,20 +38,26 @@ class MealPlansDetailView(DetailView):
 #     success_url = reverse_lazy("meal_plans_list")
 
 
-class MealPlansEditView(UpdateView):
+class MealPlansEditView(LoginRequiredMixin, UpdateView):
     model = MealPlan
     template_name = "meal_plans/edit.html"
     fields = ["name", "date", "recipes"]
     success_url = reverse_lazy("meal_plans_list")
 
+    def get_queryset(self):
+        return MealPlan.objects.filter(owner=self.request.user)
+
     def get_success_url(self) -> str:
         return reverse_lazy("meal_plans_detail", args=[self.object.id])
 
 
-class MealPlansDeleteView(DeleteView):
+class MealPlansDeleteView(LoginRequiredMixin, DeleteView):
     model = MealPlan
     template_name = "meal_plans/delete.html"
     success_url = reverse_lazy("meal_plans_list")
+
+    def get_queryset(self):
+        return MealPlan.objects.filter(owner=self.request.user)
 
 
 class MealPlansCreateView(LoginRequiredMixin, CreateView):

@@ -37,12 +37,22 @@
       </thead>
       <tbody>
         {% for ingredient in recipe.ingredients.all %}
-          <tr>
-            <td>{{ ingredient.amount }}</td>
-            <td>{{ ingredient.measure.name }}</td>
-            <td>{{ ingredient.food.name }}</td>
-          </tr>
-        {% endfor %}
+  <tr>
+    <td>{{ ingredient.amount }}</td>
+    <td>{{ ingredient.measure.name }}</td>
+    <td>{{ ingredient.food.name }}</td>
+    <td>
+      {% if ingredient.food not in food_in_shopping_list %}
+      <form method="POST" action="{% url 'shopping_item_create' %}">
+        {% csrf_token %}
+        <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}">
+        <button>+ shopping list</button>
+      </form>
+      alert("in your list")
+    </td>
+    {% endif %}
+  </tr>
+{% endfor %}
       </tbody>
     </table>
     <h2>Steps</h2>

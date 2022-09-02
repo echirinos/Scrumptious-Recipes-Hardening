@@ -32,9 +32,11 @@
           <a href="{% url 'meal_plans_detail' meal_plans.pk %}">{{ meal_plans.name }}</a>
         </h2>
         <p class="recipe-card-date">{{ meal_plans.updated }}</p>
+
         {%for recipe in meal_plans.recipes.all%}
         <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
         {% endfor %}
+
       </div>
     {% endfor %}
   </main>

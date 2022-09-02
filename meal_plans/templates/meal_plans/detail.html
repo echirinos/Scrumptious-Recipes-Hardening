@@ -3,15 +3,19 @@
 
 {% block content %}
 
-<main class="recipe-grid">
+<main class="recipe-detail">
   <div>
     <a href="{% url 'meal_plans_edit' mealplan.id %}">Edit</a>
     <a href="{% url 'meal_plans_delete' mealplan.id %}">Delete</a>
   </div>
       <h1>{{mealplan.name}}</h1>
+      <div>
+        <p>
       {%for recipe in mealplan.recipes.all%}
       <a href="{% url 'recipe_detail' recipe.pk %}">{{ recipe.name }}</a>
       {% endfor %}
+        </p>
+      </div>
 </main>
   {% comment %} <main class="recipe-detail">
     <div>

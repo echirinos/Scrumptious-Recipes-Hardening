@@ -24,19 +24,29 @@
             <li>
                 <a href="{% url 'meal_plans_list' %}">Meal Plans</a>
               </li>
+              <li>
+                <a href="{% url 'shopping_item_list' %}">
+                  Shop List ({{ user.shoppingitems.all|length }})
+                </a>
+              </li>
+
             {% if user.is_staff %}
             <li>
               <a href="{% url 'admin:index' %}">Admin</a>
             </li>
             {% endif %}
             <li>
+                <a href="{% url 'logout' %}">Logout</a>
+              </li>
+            <li>
               <a href="{% url 'recipe_new' %}">Write a recipe</a>
             </li>
             <li><a href="{% url 'login' %}">Login</a></li>
             {% if user.is_authenticated %}
             <li>
-                <a href="{% url 'logout' %}">Logout</a>
+                <p>Logged in as {{ user.get_username }}</p>
             </li>
+
 {% endif %}
           </ul>
         </nav>
